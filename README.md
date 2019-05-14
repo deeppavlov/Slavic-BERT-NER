@@ -44,19 +44,16 @@ bert = BertModel(config=bert_config,
                  
 tf.train.Saver().restore(sess, './bg_cs_pl_ru_cased_L-12_H-768_A-12/bert_model.ckpt')
 
-with tf.Session() as sess:
-    features = prep(["Bert z ulicy Sezamkowej"])[0]
-    
-    print(sess.run(bert.sequence_output, feed_dict={input_ids: [features.input_ids],
-                                                    input_mask: [features.input_mask],
-                                                    token_type_ids: [features.input_type_ids]}))
-    
-    features = prep(["Берт с Улицы Сезам"])[0]
-    
-    print(sess.run(bert.sequence_output, feed_dict={input_ids: [features.input_ids],
-                                                    input_mask: [features.input_mask],
-                                                    token_type_ids: [features.input_type_ids]}))
+preprocessor = BertPreprocessor(vocab_file='./bg_cs_pl_ru_cased_L-12_H-768_A-12/vocab.txt',
+                                do_lower_case=False,
+                                max_seq_length=512)
 
+with tf.Session() as sess:
+    features = preprocessor(["Bert z ulicy Sezamkowej"])[0]
+    
+    print(sess.run(bert.sequence_output, feed_dict={input_ids: [features.input_ids],
+                                                    input_mask: [features.input_mask],
+                                                    token_type_ids: [features.input_type_ids]}))
 ```
 
 
