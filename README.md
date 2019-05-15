@@ -1,18 +1,18 @@
-# Baltic-Slavic BERT and NER
+# Slavic BERT and NER
 
 **BERT** is a method of pre-training language representations, meaning that we train a general-purpose "language understanding" model on a large text corpus (like Wikipedia), and then use that model for downstream NLP tasks that we care about (like question answering). For details see original [BERT github](https://github.com/google-research/bert).
 
 The repository contains:
-- [BERT model for 4 languages of Bulgarian, Czech, Polish and Russian](#baltic-slavic-bert)
-- [BERT-based NER model for BSNLP-2019](#baltic-slavic-ner)
+- [BERT model for 4 languages of Bulgarian, Czech, Polish and Russian](#slavic-bert)
+- [BERT-based NER model for BSNLP-2019](#slavic-ner)
 
-## Baltic-Slavic BERT
+## Slavic BERT
 
-The Baltic-Slavic model is the result of transfer from `2018_11_23/multi_cased_L-12_H-768_A-12` Multilingual BERT model to languages of Bulgarian (`bg`), Czech (`cs`), Polish (`pl`) and Russian (`ru`). The fine-tuning was performed with a stratified dataset of `bg`, `cs` and `pl` Wikipedias and `ru` news.
+The Slavic model is the result of transfer from `2018_11_23/multi_cased_L-12_H-768_A-12` Multilingual BERT model to languages of Bulgarian (`bg`), Czech (`cs`), Polish (`pl`) and Russian (`ru`). The fine-tuning was performed with a stratified dataset of `bg`, `cs` and `pl` Wikipedias and `ru` news.
 
 The model format is the same as in the original repository.
 
-*   **[`BERT, Baltic-Slavic Cased`](http://files.deeppavlov.ai/deeppavlov_data/bg_cs_pl_ru_cased_L-12_H-768_A-12.tar.gz)**:
+*   **[`BERT, Slavic Cased`](http://files.deeppavlov.ai/deeppavlov_data/bg_cs_pl_ru_cased_L-12_H-768_A-12.tar.gz)**:
     4 languages, 12-layer, 768-hidden, 12-heads, 110M parameters
     
     
@@ -57,4 +57,4 @@ with tf.Session() as sess:
 ```
 
 
-## Baltic-Slavic NER
+## Slavic NER
