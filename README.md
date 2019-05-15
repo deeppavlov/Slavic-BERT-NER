@@ -14,46 +14,6 @@ The model format is the same as in the original repository.
 
 *   **[`BERT, Slavic Cased`](http://files.deeppavlov.ai/deeppavlov_data/bg_cs_pl_ru_cased_L-12_H-768_A-12.tar.gz)**:
     4 languages, 12-layer, 768-hidden, 12-heads, 110M parameters
-    
-#### Usage example
-
-The model can be used in any way proposed by the BERT developers.
-
-One approach may be by using pip packages `bert_dp` and `deeppavlov`:
-
-```python
-import tensorflow as tf
-
-from bert_dp.modeling import BertConfig, BertModel
-from deeppavlov.models.preprocessors.bert_preprocessor import BertPreprocessor
-
-
-bert_config = BertConfig.from_json_file('./bg_cs_pl_ru_cased_L-12_H-768_A-12/bert_config.json')
-
-input_ids = tf.placeholder(shape=(None, None), dtype=tf.int32) 
-input_mask = tf.placeholder(shape=(None, None), dtype=tf.int32) 
-token_type_ids = tf.placeholder(shape=(None, None), dtype=tf.int32)
-
-bert = BertModel(config=bert_config,
-                 is_training=False,
-                 input_ids=input_ids,
-                 input_mask=input_mask,
-                 token_type_ids=token_type_ids,
-                 use_one_hot_embeddings=False)
-                 
-tf.train.Saver().restore(sess, './bg_cs_pl_ru_cased_L-12_H-768_A-12/bert_model.ckpt')
-
-preprocessor = BertPreprocessor(vocab_file='./bg_cs_pl_ru_cased_L-12_H-768_A-12/vocab.txt',
-                                do_lower_case=False,
-                                max_seq_length=512)
-
-with tf.Session() as sess:
-    features = preprocessor(["Bert z ulicy Sezamkowej"])[0]
-    
-    print(sess.run(bert.sequence_output, feed_dict={input_ids: [features.input_ids],
-                                                    input_mask: [features.input_mask],
-                                                    token_type_ids: [features.input_type_ids]}))
-```
 
 ## Slavic NER
 
@@ -88,7 +48,78 @@ The metrics for all languages and entities on test set are:
 
 For detailed description of evaluation method see [BSNLP-2019 Shared Task page](http://bsnlp.cs.helsinki.fi/shared_task.html).
     
-#### Usage example
+# Usage
+
+#### Install
+
+The toolkit is implemented in Python 3.6 and requires a number of packages. To install all needed packages use:
+```bash
+$ pip3 install -r requirements.txt
+```
+
+or
+
+```bash
+$ pip3 install git+https://github.com/deepmipt/slavic-bert-ner
+```
+
+CAUTION: Python3.5 and Python3.7 are not supported, see [DeepPavlov rep](https://github.com/deepmipt/deeppavlov) for details.
+
+#### Ner usage
+ 
+#### Bert usage
+
+The Slavic Bert model can be used in any way proposed by the BERT developers.
+
+One approach may be by using pip packages `bert_dp` and `deeppavlov`:
+
+```python
+
+import tensorflow as tf
+  
+from bert_dp.modeling import BertConfig, BertModel
+from deeppavlov.models.preprocessors.bert_preprocessor import BertPreprocessor
+
+
+bert_config = BertConfig.from_json_file('./bg_cs_pl_ru_cased_L-12_H-768_A-12/bert_config.json')
+
+input_ids = tf.placeholder(shape=(None, None), dtype=tf.int32)
+input_mask = tf.placeholder(shape=(None, None), dtype=tf.int32)
+token_type_ids = tf.placeholder(shape=(None, None), dtype=tf.int32)
+
+bert = BertModel(config=bert_config,
+                 is_training=False,
+                 input_ids=input_ids,
+                 input_mask=input_mask,
+                 token_type_ids=token_type_ids,
+                 use_one_hot_embeddings=False)
+
+preprocessor = BertPreprocessor(vocab_file='./bg_cs_pl_ru_cased_L-12_H-768_A-12/vocab.txt',
+                                do_lower_case=False,
+                                max_seq_length=512)
+
+with tf.Session() as sess:
+
+    # Load model
+    tf.train.Saver().restore(sess, './bg_cs_pl_ru_cased_L-12_H-768_A-12/bert_model.ckpt')
+
+    # Get predictions
+    features = preprocessor(["Bert z ulicy Sezamkowej"])[0]
+
+    print(sess.run(bert.sequence_output, feed_dict={input_ids: [features.input_ids],
+                                                    input_mask: [features.input_mask],
+                                                    token_type_ids: [features.input_type_ids]}))
+
+    features = preprocessor(["Берт", "с", "Улицы", "Сезам"])[0]
+
+    print(sess.run(bert.sequence_output, feed_dict={input_ids: [features.input_ids],
+                                                    input_mask: [features.input_mask],
+                                                    token_type_ids: [features.input_type_ids]}))
+```
+
+## Train
+
+#### Ner training on your dataset
 
 ## References
 
@@ -97,3 +128,5 @@ For detailed description of evaluation method see [BSNLP-2019 Shared Task page](
 [2] - [Mozharova V., Loukachevitch N.: *Two-stage approach in Russian named entity recognition*, 2016](https://ieeexplore.ieee.org/document/7584769)
 
 [3] - [BSNLP-2019 Shared Task](http://bsnlp.cs.helsinki.fi/shared_task.html)
+
+[4] - [DeepPavlov: open-source library for dialog systems](https://github.com/deepmipt/deeppavlov)
