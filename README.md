@@ -1,4 +1,4 @@
-# Slavic BERT and NER
+# Slavic BERT NER
 
 **BERT** is a method of pre-training language representations, meaning that we train a general-purpose "language understanding" model on a large text corpus (like Wikipedia), and then use that model for downstream NLP tasks that we care about (like question answering). For details see original [BERT github](https://github.com/google-research/bert).
 
@@ -56,5 +56,14 @@ with tf.Session() as sess:
                                                     token_type_ids: [features.input_type_ids]}))
 ```
 
-
 ## Slavic NER
+
+Named Entity Recognition (further, **NER**) is a task of recognizing named entities in text, as well as detecting their type.
+
+We used Slavic BERT model as a base to build NER system. First, we feed each input word into WordPiece cased tokenizer and extract the final hidden representation corresponding to the first subtoken in each word. These representations are fed into a classification dense layer over the NER label set. A token-level CRF layer is also added on top.
+
+# References
+
+[1] - [Jacob Devlin et all: *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*, 2018](https://arxiv.org/abs/1810.04805)
+
+[2] - [Mozharova V., Loukachevitch N.: *Two-stage approach in Russian named entity recognition*, 2016](https://ieeexplore.ieee.org/document/7584769)
