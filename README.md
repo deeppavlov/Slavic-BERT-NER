@@ -19,7 +19,7 @@ The model format is the same as in the original repository.
 
 Named Entity Recognition (further, **NER**) is a task of recognizing named entities in text, as well as detecting their type.
 
-We used Slavic BERT model as a base to build NER system. First, we feed each input word into WordPiece cased tokenizer and extract the final hidden representation corresponding to the first subtoken in each word. These representations are fed into a classification dense layer over the NER label set. A token-level CRF layer is also added on top.
+We used Slavic BERT model as a base to build NER system. First, we feed each input word into WordPiece case-sensitive tokenizer and extract the final hidden representation corresponding to the first subtoken in each word. These representations are fed into a classification dense layer over the NER label set. A token-level CRF layer is also added on top.
 
 ![BERT NER diagram](bert_ner_diagram.png)
 
@@ -47,12 +47,16 @@ The metrics for all languages and entities on test set are:
 |              |      | **89.8**      | **91.8**     | **90.8**                          |
 
 For detailed description of evaluation method see [BSNLP-2019 Shared Task page](http://bsnlp.cs.helsinki.fi/shared_task.html).
+
+*   **[`NER, Slavic Cased`](http://files.deeppavlov.ai/deeppavlov_data/ner_bert_slav.tar.gz)**:
+    4 languages, 13-layer + CRF, 768-hidden
     
 # Usage
 
 #### Install
 
 The toolkit is implemented in Python 3.6 and requires a number of packages. To install all needed packages use:
+
 ```bash
 $ pip3 install -r requirements.txt
 ```
@@ -66,12 +70,24 @@ $ pip3 install git+https://github.com/deepmipt/slavic-bert-ner
 CAUTION: Python3.5 and Python3.7 are not supported, see [DeepPavlov rep](https://github.com/deepmipt/deeppavlov) for details.
 
 #### Ner usage
+
+```python
+from deeppavlov import build_model
+
+ner = build_model("./ner_bert_slav.json", download=True)
+
+ner(["Bert z ulicy Sezamkowej"])
+# [['Bert z ulicy Sezamkowej'], [['O', 'O', 'B-LOC', 'I-LOC']]]
+
+ner(["Берт", "с", "Улицы", "Сезам"])
+# [['Берт', 'с', 'Улицы', 'Сезам'], [['B-PER'], ['O'], ['B-PER'], ['I-PER']]]
+```
  
 #### Bert usage
 
 The Slavic Bert model can be used in any way proposed by the BERT developers.
 
-One approach may be by using pip packages `bert_dp` and `deeppavlov`:
+One approach may be:
 
 ```python
 
@@ -116,10 +132,6 @@ with tf.Session() as sess:
                                                     input_mask: [features.input_mask],
                                                     token_type_ids: [features.input_type_ids]}))
 ```
-
-## Train
-
-#### Ner training on your dataset
 
 ## References
 
