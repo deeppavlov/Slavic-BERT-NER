@@ -13,7 +13,7 @@ The Slavic model is the result of transfer from `2018_11_23/multi_cased_L-12_H-7
 The model format is the same as in the original repository.
 
 *   **[`BERT, Slavic Cased`](http://files.deeppavlov.ai/deeppavlov_data/bg_cs_pl_ru_cased_L-12_H-768_A-12.tar.gz)**:
-    4 languages, 12-layer, 768-hidden, 12-heads, 110M parameters
+    4 languages, 12-layer, 768-hidden, 12-heads, 110M parameters, 600Mb
 
 ## Slavic NER
 
@@ -49,7 +49,7 @@ The metrics for all languages and entities on test set are:
 For detailed description of evaluation method see [BSNLP-2019 Shared Task page](http://bsnlp.cs.helsinki.fi/shared_task.html).
 
 *   **[`NER, Slavic Cased`](http://files.deeppavlov.ai/deeppavlov_data/ner_bert_slav.tar.gz)**:
-    4 languages, 13-layer + CRF, 768-hidden
+    4 languages, 13-layer + CRF, 768-hidden, 2.0Gb
     
 # Usage
 
@@ -74,13 +74,15 @@ CAUTION: Python3.5 and Python3.7 are not supported, see [DeepPavlov rep](https:/
 ```python
 from deeppavlov import build_model
 
+# Download and load model (set download=False to skip download phase)
 ner = build_model("./ner_bert_slav.json", download=True)
 
+# Get predictions
 ner(["Bert z ulicy Sezamkowej"])
 # [['Bert z ulicy Sezamkowej'], [['O', 'O', 'B-LOC', 'I-LOC']]]
 
 ner(["Берт", "с", "Улицы", "Сезам"])
-# [['Берт', 'с', 'Улицы', 'Сезам'], [['B-PER'], ['O'], ['B-PER'], ['I-PER']]]
+# [['Берт', 'с', 'Улицы', 'Сезам'], [['O'], ['O'], ['O'], ['B-PER']]]
 ```
  
 #### Bert usage
