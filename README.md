@@ -61,12 +61,6 @@ The toolkit is implemented in Python 3.6 and requires a number of packages. To i
 $ pip3 install -r requirements.txt
 ```
 
-or
-
-```bash
-$ pip3 install git+https://github.com/deepmipt/slavic-bert-ner
-```
-
 CAUTION: Python3.5 and Python3.7 are not supported, see [DeepPavlov rep](https://github.com/deepmipt/deeppavlov) for details.
 
 #### Ner usage
@@ -78,11 +72,10 @@ from deeppavlov import build_model
 ner = build_model("./ner_bert_slav.json", download=True)
 
 # Get predictions
-ner(["Bert z ulicy Sezamkowej"])
-# [['Bert z ulicy Sezamkowej'], [['O', 'O', 'B-LOC', 'I-LOC']]]
-
-ner(["Берт", "с", "Улицы", "Сезам"])
-# [['Берт', 'с', 'Улицы', 'Сезам'], [['O'], ['O'], ['O'], ['B-PER']]]
+ner(["To Bert z ulicy Sezamkowej"])
+# [[['To', 'Bert', 'z', 'ulicy', 'Sezamkowej']], [['O', 'B-PER', 'O', 'B-LOC', 'I-LOC']]]
+ner(["Это", "Берт", "из", "России"])
+# [[['Это'], ['Берт'], ['из'], ['России']], [['O'], ['B-PER'], ['O'], ['B-LOC']]]
 ```
  
 #### Bert usage
