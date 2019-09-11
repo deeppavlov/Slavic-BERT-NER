@@ -6,6 +6,8 @@ The repository contains **Bulgarian**+**Czech**+**Polish**+**Russian** specific:
 - [shared BERT model](#slavic-bert)
 - [NER model (`PER`, `LOC`, `ORG`, `PRO`, `EVT`)](#slavic-bert)
 
+Our academic paper which describes tuning Transformers for NER task in detail can be found here: https://www.aclweb.org/anthology/W19-3712/.
+
 ## Slavic BERT
 
 The Slavic model is the result of transfer from `2018_11_23/multi_cased_L-12_H-768_A-12` Multilingual BERT model to languages of Bulgarian (`bg`), Czech (`cs`), Polish (`pl`) and Russian (`ru`). The fine-tuning was performed with a stratified dataset of `bg`, `cs` and `pl` Wikipedias and `ru` news.
