@@ -1,5 +1,7 @@
 # Slavic BERT NER
 
+***Notice:** The repo is left as-is, the Slavic BERT model is now as part of [DeepPavlov repo](https://github.com/deepmipt/DeepPavlov).*
+
 **BERT** is a method of pre-training language representations, meaning that we train a general-purpose "language understanding" model on a large text corpus (like Wikipedia), and then use that model for downstream NLP tasks that we care about (like question answering). For details see original [BERT github](https://github.com/google-research/bert).
 
 The repository contains **Bulgarian**+**Czech**+**Polish**+**Russian** specific:
@@ -128,6 +130,25 @@ with tf.Session() as sess:
     print(sess.run(bert.sequence_output, feed_dict={input_ids: [features.input_ids],
                                                     input_mask: [features.input_mask],
                                                     token_type_ids: [features.input_type_ids]}))
+```
+
+## Citation
+```
+@inproceedings{arkhipov-etal-2019-tuning,
+    title = "Tuning Multilingual Transformers for Language-Specific Named Entity Recognition",
+    author = "Arkhipov, Mikhail  and
+      Trofimova, Maria  and
+      Kuratov, Yuri  and
+      Sorokin, Alexey",
+    booktitle = "Proceedings of the 7th Workshop on Balto-Slavic Natural Language Processing",
+    month = aug,
+    year = "2019",
+    address = "Florence, Italy",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W19-3712",
+    doi = "10.18653/v1/W19-3712",
+    pages = "89--93"
+}
 ```
 
 ## References
