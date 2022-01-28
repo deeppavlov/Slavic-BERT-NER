@@ -59,13 +59,13 @@ For detailed description of evaluation method see [BSNLP-2019 Shared Task page](
 
 #### Install
 
-The toolkit is implemented in Python 3.6 and requires a number of packages. To install all needed packages use:
+The toolkit support Python 3.6 and Python3.7. To install required packages use:
 
 ```bash
 $ pip3 install -r requirements.txt
 ```
 
-CAUTION: Python3.5 and Python3.7 are not supported, see [DeepPavlov rep](https://github.com/deepmipt/deeppavlov) for details.
+CAUTION: Python<=3.5 and Python>=3.8 are not supported, see [DeepPavlov rep](https://github.com/deepmipt/deeppavlov) for details.
 
 #### Ner usage
 
@@ -131,6 +131,11 @@ with tf.Session() as sess:
                                                     input_mask: [features.input_mask],
                                                     token_type_ids: [features.input_type_ids]}))
 ```
+
+## Changes
+
+[Jan 2021] fixed 'Model bert_ner is not registered' issue, updated to
+  `deeppavlov==0.17.2`, `tensorflow==1.15.5`
 
 ## Citation
 ```
